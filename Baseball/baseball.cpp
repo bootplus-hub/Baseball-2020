@@ -21,7 +21,14 @@ public:
 			return { true, 3, 0 };
 		}
 
-		return { false, getStrikes(guessNumber), getBalls(guessNumber) };
+		GuessResult rst{ false, 0, 0 };
+
+		for (int index = 0; index < (int)question.size(); index++) {
+			if (isStrike(guessNumber[index], index)) rst.strikes++;
+			if (isBall(guessNumber[index], index)) rst.balls++;
+		}
+
+		return rst;
 	}
 	void assertIllegalArgument(const std::string& guessNumber)
 	{
@@ -45,23 +52,14 @@ public:
 			|| guessNumber[1] == guessNumber[2];
 	}
 
-	int getStrikes(const string& guessNumber) {
-		int rst = 0;
-		for (int index = 0; index < (int)question.size(); ++index) {
-			if (question[index] != guessNumber[index]) continue;
-			rst++;
-		}
-		return rst;
+	bool isStrike(char number, int index) {
+		return question[index] == number;
 	}
-
-	int getBalls(const string& guessNumber) {
-		int rst = 0;
-		for (int index = 0; index < (int)question.size(); ++index) {
-			if (question[index] == guessNumber[index]) continue;
-			if (guessNumber.find(question[index]) == -1) continue;
-			rst++;
-		}
-		return rst;
+	
+	bool isBall(char number, int index) {
+		if (question[index] == number) return false;
+		if (question.find(number) == -1) return false;
+		return true;
 	}
 private:
 	string question;
