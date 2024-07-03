@@ -21,19 +21,7 @@ public:
 			return { true, 3, 0 };
 		}
 
-		if (guessNumber[0] == question[0]
-			&& guessNumber[1] == question[1]
-			&& guessNumber[2] != question[2]) {
-			return { false, 2, 0 };
-		}
-
-		if (guessNumber[0] == question[0]
-			&& guessNumber[1] != question[1]
-			&& guessNumber[2] != question[2]) {
-			return { false, 1, 2 };
-		}
-
-		return { false, 0, 0 };
+		return { false, getStrikes(guessNumber), getBalls(guessNumber) };
 	}
 	void assertIllegalArgument(const std::string& guessNumber)
 	{
@@ -55,6 +43,24 @@ public:
 		return guessNumber[0] == guessNumber[1]
 			|| guessNumber[0] == guessNumber[2]
 			|| guessNumber[1] == guessNumber[2];
+	}
+
+	int getStrikes(const string& guessNumber) {
+		int rst = 0;
+		for (int index = 0; index < (int)question.size(); ++index) {
+			if (question[index] == guessNumber[index]) rst++;
+		}
+		return rst;
+	}
+
+	int getBalls(const string& guessNumber) {
+		int rst = 0;
+		for (int index = 0; index < (int)question.size(); ++index) {
+			if (question[index] != guessNumber[index]) {
+				if (guessNumber.find(question[index]) != -1) rst++;
+			}
+		}
+		return rst;
 	}
 private:
 	string question;
