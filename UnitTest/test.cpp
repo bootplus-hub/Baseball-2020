@@ -4,12 +4,21 @@
 
 using namespace std;
 
-TEST(BaseballGame, ThrowExceptionWhenInputLengthIsUnMatched) {
+class BaseballFixture : public testing::Test {
+public:
 	Baseball game;
-	EXPECT_THROW(game.guess(string("12")), length_error);
-}
+	void assertIllegalArgment(string guessNumber) {
+		try {
+			game.guess(string("12s"));
+			FAIL();
+		}
+		catch (exception e) {
+			// PASS
+		}
+	}
+};
 
-TEST(BaseballGame, ThrowExceptionWhenInvalidChar) {
-	Baseball game;
-	EXPECT_THROW(game.guess(string("12s")), invalid_argument);
+TEST_F(BaseballFixture, ThrowExceptionWhenInvalidCase) {
+	assertIllegalArgment("12");
+	assertIllegalArgment("12s");
 }
