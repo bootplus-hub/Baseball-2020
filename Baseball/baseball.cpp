@@ -48,7 +48,8 @@ public:
 	int getStrikes(const string& guessNumber) {
 		int rst = 0;
 		for (int index = 0; index < (int)question.size(); ++index) {
-			if (question[index] == guessNumber[index]) rst++;
+			if (question[index] != guessNumber[index]) continue;
+			rst++;
 		}
 		return rst;
 	}
@@ -56,9 +57,9 @@ public:
 	int getBalls(const string& guessNumber) {
 		int rst = 0;
 		for (int index = 0; index < (int)question.size(); ++index) {
-			if (question[index] != guessNumber[index]) {
-				if (guessNumber.find(question[index]) != -1) rst++;
-			}
+			if (question[index] == guessNumber[index]) continue;
+			if (guessNumber.find(question[index]) == -1) continue;
+			rst++;
 		}
 		return rst;
 	}
