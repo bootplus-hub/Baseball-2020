@@ -9,7 +9,7 @@ public:
 	Baseball game;
 	void assertIllegalArgment(string guessNumber) {
 		try {
-			game.guess(string("12s"));
+			game.guess(string(guessNumber));
 			FAIL();
 		}
 		catch (exception e) {
